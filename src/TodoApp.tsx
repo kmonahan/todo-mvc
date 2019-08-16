@@ -17,9 +17,18 @@ export const TodoApp = () => {
     },
   ]);
 
+  const addNewTodo = (item: string, completed = false) => {
+    const newTodos = [...todoList];
+    newTodos.push({
+      item,
+      completed,
+    });
+    setTodoList(newTodos);
+  };
+
   return (
     <section className="todoapp">
-      <Header />
+      <Header addNewTodo={addNewTodo} />
       <TodoList todoList={todoList} />
       <Footer
         itemCount={todoList.length}
