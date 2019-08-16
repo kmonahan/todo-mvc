@@ -13,8 +13,16 @@ export const TodoItem = (props: TodoItemProps) => {
     removeTodo(item);
   };
 
+  const wrapperClasses = [];
+
+  if (item.completed) {
+    wrapperClasses.push('completed');
+  }
+
+  const wrapperClassName = wrapperClasses.join(' ');
+
   return (
-    <li>
+    <li className={wrapperClassName}>
       <div className="view">
         <input
           className="toggle"
@@ -25,7 +33,7 @@ export const TodoItem = (props: TodoItemProps) => {
         <label>{item.item}</label>
         <button className="destroy" onClick={handleDestroyClick} />
       </div>
-      <input className="edit" value="Create a TodoMVC template" />
+      <input className="edit" value={item.item} />
     </li>
   );
 };
