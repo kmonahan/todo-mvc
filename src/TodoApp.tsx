@@ -26,6 +26,11 @@ export const TodoApp = () => {
     setTodoList(newTodos);
   };
 
+  const removeTodo = (item: TodoItem) => {
+    const newTodos = todoList.filter(todo => todo !== item);
+    setTodoList(newTodos);
+  };
+
   const toggleTodoCompletion = (item: TodoItem) => {
     const newTodos = [...todoList];
     const todoToUpdate = newTodos.findIndex(todo => todo === item);
@@ -41,6 +46,7 @@ export const TodoApp = () => {
       <TodoList
         todoList={todoList}
         toggleTodoCompletion={toggleTodoCompletion}
+        removeTodo={removeTodo}
       />
       <Footer
         itemCount={todoList.length}

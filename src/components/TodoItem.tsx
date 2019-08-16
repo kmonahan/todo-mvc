@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { TodoItemProps } from '../types/TodoItem';
 
 export const TodoItem = (props: TodoItemProps) => {
-  const { item, toggleTodoCompletion } = props;
+  const { item, toggleTodoCompletion, removeTodo } = props;
 
   const handleCheckboxChange = () => {
     toggleTodoCompletion(item);
+  };
+
+  const handleDestroyClick = (e: MouseEvent) => {
+    e.preventDefault();
+    removeTodo(item);
   };
 
   return (
@@ -18,7 +23,7 @@ export const TodoItem = (props: TodoItemProps) => {
           onChange={handleCheckboxChange}
         />
         <label>{item.item}</label>
-        <button className="destroy" />
+        <button className="destroy" onClick={handleDestroyClick} />
       </div>
       <input className="edit" value="Create a TodoMVC template" />
     </li>
