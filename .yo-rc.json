@@ -1,0 +1,10 @@
+{
+  "generator-web-starter": {
+    "promptValues": {
+      "name": "todo-mvc",
+      "platform": "JavaScript",
+      "useCapistrano": false
+    },
+    "projectName": "todo-mvc"
+  }
+}
