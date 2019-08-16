@@ -3,7 +3,7 @@ import { TodoListProps } from '../types/TodoList';
 import { TodoItem } from './TodoItem';
 
 export const TodoList = (props: TodoListProps) => {
-  const { todoList } = props;
+  const { todoList, toggleTodoCompletion } = props;
   if (todoList.length < 1) {
     return null;
   }
@@ -13,7 +13,7 @@ export const TodoList = (props: TodoListProps) => {
       <label htmlFor="toggle-all">Mark all as complete</label>
       <ul className="todo-list">
         {todoList.map(item => (
-          <TodoItem item={item} />
+          <TodoItem item={item} toggleTodoCompletion={toggleTodoCompletion} />
         ))}
       </ul>
     </section>

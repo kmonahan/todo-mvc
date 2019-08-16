@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { TodoList } from './components/TodoList';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
+import { TodoItem } from './types/TodoItem';
 
 export const TodoApp = () => {
-  // @ts-ignore
   const [todoList, setTodoList] = useState([
     {
       item: 'Learn React',
@@ -26,10 +26,22 @@ export const TodoApp = () => {
     setTodoList(newTodos);
   };
 
+  const toggleTodoCompletion = (item: TodoItem) => {
+    const newTodos = [...todoList];
+    const todoToUpdate = newTodos.findIndex(todo => todo === item);
+    if (todoToUpdate > -1) {
+      newTodos[todoToUpdate].completed = !newTodos[todoToUpdate].completed;
+    }
+    setTodoList(newTodos);
+  };
+
   return (
     <section className="todoapp">
       <Header addNewTodo={addNewTodo} />
-      <TodoList todoList={todoList} />
+      <TodoList
+        todoList={todoList}
+        toggleTodoCompletion={toggleTodoCompletion}
+      />
       <Footer
         itemCount={todoList.length}
         completedItems={todoList.filter(item => item.completed).length}

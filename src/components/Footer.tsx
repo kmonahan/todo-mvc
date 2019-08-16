@@ -26,7 +26,7 @@ export const Footer = (props: FooterProps) => {
           <a href="/completed">Completed</a>
         </li>
       </ul>
-      {completedItems && (
+      {completedItems > 0 && (
         <button className="clear-completed">Clear completed</button>
       )}
     </footer>

@@ -5,4 +5,5 @@ export interface TodoItem {
 
 export interface TodoItemProps {
   item: TodoItem;
+  toggleTodoCompletion: (item: TodoItem) => void;
 }
