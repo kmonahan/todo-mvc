@@ -12,6 +12,8 @@ export const TodoInput = (props: TodoInputProps) => {
 
     if (keyCode === 13) {
       updateTodoValue(value.trim());
+    } else if (keyCode === 27) {
+      updateTodoValue(item.task);
     } else {
       setValue(target.value);
     }
