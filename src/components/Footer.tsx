@@ -2,7 +2,7 @@ import React from 'react';
 import { FooterProps } from '../types/Footer';
 
 export const Footer = (props: FooterProps) => {
-  const { itemCount, completedItems } = props;
+  const { itemCount, completedItems, clearCompletedTodos } = props;
   if (itemCount < 1) {
     return null;
   }
@@ -27,7 +27,9 @@ export const Footer = (props: FooterProps) => {
         </li>
       </ul>
       {completedItems > 0 && (
-        <button className="clear-completed">Clear completed</button>
+        <button className="clear-completed" onClick={clearCompletedTodos}>
+          Clear completed
+        </button>
       )}
     </footer>
   );

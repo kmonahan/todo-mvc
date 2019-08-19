@@ -83,6 +83,11 @@ export const TodoApp = () => {
     setTodoList(newTodos);
   };
 
+  const clearCompletedTodos = () => {
+    const onlyOpenTodos = todoList.filter(item => !item.completed);
+    setTodoList(onlyOpenTodos);
+  };
+
   return (
     <section className="todoapp">
       <Header addNewTodo={addNewTodo} />
@@ -97,6 +102,7 @@ export const TodoApp = () => {
       <Footer
         itemCount={todoList.length}
         completedItems={todoList.filter(item => item.completed).length}
+        clearCompletedTodos={clearCompletedTodos}
       />
     </section>
   );
