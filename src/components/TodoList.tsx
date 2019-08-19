@@ -3,7 +3,7 @@ import { TodoListProps } from '../types/TodoList';
 import { TodoItem } from './TodoItem';
 
 export const TodoList = (props: TodoListProps) => {
-  const { todoList, toggleTodoCompletion, removeTodo } = props;
+  const { todoList, updateTodo, removeTodo } = props;
   if (todoList.length < 1) {
     return null;
   }
@@ -15,7 +15,7 @@ export const TodoList = (props: TodoListProps) => {
         {todoList.map(item => (
           <TodoItem
             item={item}
-            toggleTodoCompletion={toggleTodoCompletion}
+            updateTodo={updateTodo}
             removeTodo={removeTodo}
           />
         ))}

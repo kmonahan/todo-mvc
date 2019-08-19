@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { TodoList } from './components/TodoList';
 import { Footer } from './components/Footer';
@@ -6,23 +6,57 @@ import { Header } from './components/Header';
 import { TodoItem } from './types/TodoItem';
 
 export const TodoApp = () => {
-  const [todoList, setTodoList] = useState([
-    {
-      item: 'Learn React',
-      completed: false,
-    },
-    {
-      item: 'Learn TypeScript',
-      completed: true,
-    },
-  ]);
+  // State hooks.
+  const [incrementor, setIncrementor] = useState(0);
+  const [todoList, setTodoList] = useState(new Array<TodoItem>());
 
-  const addNewTodo = (item: string, completed = false) => {
+  // Effect hooks.
+  useEffect(() => {
+    const initialTodos = [
+      {
+        id: 0,
+        task: 'Learn React',
+        completed: false,
+        editing: false,
+      },
+      {
+        id: 1,
+        task: 'Learn TypeScript',
+        completed: true,
+        editing: false,
+      },
+    ];
+    setTodoList(initialTodos);
+  }, []);
+
+  useEffect(() => {
+    if (todoList.length > 0) {
+      todoList.sort((a, b) => a.id - b.id);
+      const lastItem = todoList[todoList.length - 1];
+      const lastItemId = lastItem.id;
+      if (lastItemId >= incrementor) {
+        setIncrementor(incrementor + 1);
+      }
+    }
+  }, [todoList, incrementor]);
+
+  const addNewTodo = (task: string, completed = false, editing = false) => {
     const newTodos = [...todoList];
     newTodos.push({
-      item,
+      id: incrementor,
+      task,
       completed,
+      editing,
     });
+    setTodoList(newTodos);
+  };
+
+  const updateTodo = (item: TodoItem) => {
+    const newTodos = [...todoList];
+    const todoToUpdate = newTodos.findIndex(todo => todo.id === item.id);
+    if (todoToUpdate > -1) {
+      newTodos[todoToUpdate] = item;
+    }
     setTodoList(newTodos);
   };
 
@@ -31,21 +65,12 @@ export const TodoApp = () => {
     setTodoList(newTodos);
   };
 
-  const toggleTodoCompletion = (item: TodoItem) => {
-    const newTodos = [...todoList];
-    const todoToUpdate = newTodos.findIndex(todo => todo === item);
-    if (todoToUpdate > -1) {
-      newTodos[todoToUpdate].completed = !newTodos[todoToUpdate].completed;
-    }
-    setTodoList(newTodos);
-  };
-
   return (
     <section className="todoapp">
       <Header addNewTodo={addNewTodo} />
       <TodoList
         todoList={todoList}
-        toggleTodoCompletion={toggleTodoCompletion}
+        updateTodo={updateTodo}
         removeTodo={removeTodo}
       />
       <Footer

@@ -1,10 +1,12 @@
 export interface TodoItem {
-  item: string;
+  id: number;
+  task: string;
   completed: boolean;
+  editing: boolean;
 }
 
 export interface TodoItemProps {
   item: TodoItem;
-  toggleTodoCompletion: (item: TodoItem) => void;
+  updateTodo: (item: TodoItem) => void;
   removeTodo: (item: TodoItem) => void;
 }
