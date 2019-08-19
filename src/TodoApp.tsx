@@ -9,6 +9,7 @@ export const TodoApp = () => {
   // State hooks.
   const [incrementor, setIncrementor] = useState(0);
   const [todoList, setTodoList] = useState(new Array<TodoItem>());
+  const [selectAll, setSelectAll] = useState(false);
 
   // Effect hooks.
   useEffect(() => {
@@ -65,11 +66,22 @@ export const TodoApp = () => {
     setTodoList(newTodos);
   };
 
+  const updateAllTodos = (completed: boolean) => {
+    const newTodos = todoList.map(item => {
+      item.completed = completed;
+      return item;
+    });
+    setTodoList(newTodos);
+  };
+
   return (
     <section className="todoapp">
       <Header addNewTodo={addNewTodo} />
       <TodoList
         todoList={todoList}
+        selectAll={selectAll}
+        setSelectAll={setSelectAll}
+        updateAllTodos={updateAllTodos}
         updateTodo={updateTodo}
         removeTodo={removeTodo}
       />
