@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { TodoList } from './components/TodoList';
 import { Footer } from './components/Footer';
@@ -6,29 +6,33 @@ import { Header } from './components/Header';
 import { TodoItem } from './types/TodoItem';
 
 export const TodoApp = () => {
+  // Constants.
+  const LOCAL_STORAGE_KEY = 'todos-react';
+
   // State hooks.
   const [incrementor, setIncrementor] = useState(0);
   const [todoList, setTodoList] = useState(new Array<TodoItem>());
   const [selectAll, setSelectAll] = useState(false);
 
+  // Refs.
+  const isOnLoad = useRef(true);
+
   // Effect hooks.
   useEffect(() => {
-    const initialTodos = [
-      {
-        id: 0,
-        task: 'Learn React',
-        completed: false,
-        editing: false,
-      },
-      {
-        id: 1,
-        task: 'Learn TypeScript',
-        completed: true,
-        editing: false,
-      },
-    ];
-    setTodoList(initialTodos);
-  }, []);
+    if (isOnLoad.current) {
+      const storedTodos = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (storedTodos) {
+        const storedTodosObj = JSON.parse(storedTodos);
+        setTodoList(storedTodosObj);
+      }
+      isOnLoad.current = false;
+    } else {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todoList));
+    }
+    return () => {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todoList));
+    };
+  }, [todoList]);
 
   useEffect(() => {
     if (todoList.length > 0) {
