@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { TodoList } from './components/TodoList';
 import { Footer } from './components/Footer';
@@ -92,9 +93,8 @@ export const TodoApp = () => {
     setTodoList(onlyOpenTodos);
   };
 
-  return (
-    <section className="todoapp">
-      <Header addNewTodo={addNewTodo} />
+  const AllTodos = () => {
+    return (
       <TodoList
         todoList={todoList}
         selectAll={selectAll}
@@ -103,11 +103,48 @@ export const TodoApp = () => {
         updateTodo={updateTodo}
         removeTodo={removeTodo}
       />
-      <Footer
-        itemCount={todoList.length}
-        completedItems={todoList.filter(item => item.completed).length}
-        clearCompletedTodos={clearCompletedTodos}
+    );
+  };
+
+  const CompletedTodos = () => {
+    return (
+      <TodoList
+        todoList={todoList.filter(item => item.completed)}
+        selectAll={selectAll}
+        setSelectAll={setSelectAll}
+        updateAllTodos={updateAllTodos}
+        updateTodo={updateTodo}
+        removeTodo={removeTodo}
       />
-    </section>
+    );
+  };
+
+  const ActiveTodos = () => {
+    return (
+      <TodoList
+        todoList={todoList.filter(item => !item.completed)}
+        selectAll={selectAll}
+        setSelectAll={setSelectAll}
+        updateAllTodos={updateAllTodos}
+        updateTodo={updateTodo}
+        removeTodo={removeTodo}
+      />
+    );
+  };
+
+  return (
+    <Router>
+      <section className="todoapp">
+        <Header addNewTodo={addNewTodo} />
+        <Route exact path="/" component={AllTodos} />
+        <Route path="/active" component={ActiveTodos} />
+        <Route path="/completed" component={CompletedTodos} />
+        <Footer
+          itemCount={todoList.length}
+          completedItems={todoList.filter(item => item.completed).length}
+          clearCompletedTodos={clearCompletedTodos}
+        />
+      </section>
+    </Router>
   );
 };

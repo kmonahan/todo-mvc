@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { FooterProps } from '../types/Footer';
 
 export const Footer = (props: FooterProps) => {
@@ -15,15 +16,19 @@ export const Footer = (props: FooterProps) => {
       {/* Remove this if you don't implement routing */}
       <ul className="filters">
         <li>
-          <a className="selected" href="/">
+          <NavLink exact activeClassName="selected" to="/">
             All
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a href="/active">Active</a>
+          <NavLink activeClassName="selected" to="/active">
+            Active
+          </NavLink>
         </li>
         <li>
-          <a href="/completed">Completed</a>
+          <NavLink activeClassName="selected" to="/completed">
+            Completed
+          </NavLink>
         </li>
       </ul>
       {completedItems > 0 && (
