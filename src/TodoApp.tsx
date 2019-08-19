@@ -1,3 +1,4 @@
+// @ts-ignore
 import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -8,14 +9,17 @@ import { TodoItem } from './types/TodoItem';
 
 export const TodoApp = () => {
   // Constants.
+  // @ts-ignore
   const LOCAL_STORAGE_KEY = 'todos-react';
 
   // State hooks.
+  // @ts-ignore
   const [incrementor, setIncrementor] = useState(0);
   const [todoList, setTodoList] = useState(new Array<TodoItem>());
   const [selectAll, setSelectAll] = useState(false);
 
   // Refs.
+  // @ts-ignore
   const isOnLoad = useRef(true);
 
   // Effect hooks.
@@ -37,8 +41,9 @@ export const TodoApp = () => {
 
   useEffect(() => {
     if (todoList.length > 0) {
-      todoList.sort((a, b) => a.id - b.id);
-      const lastItem = todoList[todoList.length - 1];
+      const todoListCopy = [...todoList];
+      todoListCopy.sort((a, b) => a.id - b.id);
+      const lastItem = todoListCopy[todoListCopy.length - 1];
       const lastItemId = lastItem.id;
       if (lastItemId >= incrementor) {
         setIncrementor(incrementor + 1);
@@ -47,11 +52,13 @@ export const TodoApp = () => {
   }, [todoList, incrementor]);
 
   useEffect(() => {
-    const completedTodos = todoList.filter(item => item.completed).length;
-    if (completedTodos === 0 && selectAll) {
-      setSelectAll(false);
-    } else if (completedTodos === todoList.length && !selectAll) {
-      setSelectAll(true);
+    if (todoList.length > 0) {
+      const completedTodos = todoList.filter(item => item.completed).length;
+      if (completedTodos === 0 && selectAll) {
+        setSelectAll(false);
+      } else if (completedTodos === todoList.length && !selectAll) {
+        setSelectAll(true);
+      }
     }
   }, [todoList, selectAll]);
 

@@ -34,6 +34,7 @@ export const TodoList = (props: TodoListProps) => {
       <ul className="todo-list">
         {todoList.map(item => (
           <TodoItem
+            key={item.id}
             item={item}
             updateTodo={updateTodo}
             removeTodo={removeTodo}
