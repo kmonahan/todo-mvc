@@ -14,7 +14,6 @@ export const TodoList = (props: TodoListProps) => {
 
   const handleToggle = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
-    console.log('Checked', target.checked);
     updateAllTodos(target.checked);
     setSelectAll(target.checked);
   };
@@ -28,7 +27,7 @@ export const TodoList = (props: TodoListProps) => {
         id="toggle-all"
         className="toggle-all"
         type="checkbox"
-        defaultChecked={selectAll}
+        checked={selectAll}
         onChange={handleToggle}
       />
       <label htmlFor="toggle-all">Mark all as complete</label>

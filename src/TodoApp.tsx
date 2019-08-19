@@ -41,6 +41,15 @@ export const TodoApp = () => {
     }
   }, [todoList, incrementor]);
 
+  useEffect(() => {
+    const completedTodos = todoList.filter(item => item.completed).length;
+    if (completedTodos === 0 && selectAll) {
+      setSelectAll(false);
+    } else if (completedTodos === todoList.length && !selectAll) {
+      setSelectAll(true);
+    }
+  }, [todoList, selectAll]);
+
   const addNewTodo = (task: string, completed = false, editing = false) => {
     const newTodos = [...todoList];
     newTodos.push({
