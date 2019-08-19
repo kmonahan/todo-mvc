@@ -1,5 +1,6 @@
 import React, { MouseEvent } from 'react';
 import { TodoItemProps } from '../types/TodoItem';
+import { TodoInput } from './TodoInput';
 
 export const TodoItem = (props: TodoItemProps) => {
   const { item, updateTodo, removeTodo } = props;
@@ -20,6 +21,17 @@ export const TodoItem = (props: TodoItemProps) => {
     const newTodo = { ...item };
     newTodo.editing = true;
     updateTodo(newTodo);
+  };
+
+  const handleEditUpdate = (newValue: string) => {
+    if (newValue === '') {
+      removeTodo(item);
+    } else {
+      const newTodo = { ...item };
+      newTodo.task = newValue;
+      newTodo.editing = false;
+      updateTodo(newTodo);
+    }
   };
 
   const wrapperClassName = () => {
@@ -45,7 +57,9 @@ export const TodoItem = (props: TodoItemProps) => {
         <label onDoubleClick={handleEditingClick}>{item.task}</label>
         <button className="destroy" onClick={handleDestroyClick} />
       </div>
-      <input className="edit" value={item.task} />
+      {item.editing && (
+        <TodoInput item={item} updateTodoValue={handleEditUpdate} />
+      )}
     </li>
   );
 };
